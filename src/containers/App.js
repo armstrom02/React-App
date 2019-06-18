@@ -5,13 +5,25 @@ import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
 
-  state = {
-    persons: [
-      { id: 'sdsf', name: "vivek", age: 25 },
-      { id: 'sfsdff', name: "rahul", age: 28 },
-      { id: 'sfdsfd', name: "ankur", age: 65 }
-    ],
-    showPerson: false
+  constructor(props) {
+    super(props);
+    console.log('[App.js]constructor');
+    this.state = {
+      persons: [
+        { id: 'sdsf', name: "vivek", age: 25 },
+        { id: 'sfsdff', name: "rahul", age: 28 },
+        { id: 'sfdsfd', name: "ankur", age: 65 }
+      ],
+      showPerson: false
+    }
+  }
+
+  componentWillMount() {
+    console.log('[App.js]componentWillMount()');
+  }
+
+  componentDidMount() {
+    console.log('[App.js]componentDidMount()');
   }
 
   togglePersonHandler = () => {
@@ -46,7 +58,7 @@ class App extends Component {
   }
 
   render() {
-
+    console.log('[App.js]render()');
 
     let person = null;
 
@@ -54,7 +66,7 @@ class App extends Component {
       person =
         (<div>
           <Persons
-            person={this.state.persons}
+            persons={this.state.persons}
             remove={(index) => this.deletePersonHandler(index)}
             change={(event, id) => this.changeNameHandler(event, id)}
           />
@@ -67,7 +79,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Cockpit toggle={this.togglePersonHandler} persons={this.state.persons} />
+        <Cockpit title={this.props.title} toggle={this.togglePersonHandler} persons={this.state.persons} />
         {person}
       </div>
     );
