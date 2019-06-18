@@ -38,6 +38,7 @@ class Persons extends Component {
         console.log('[Persons.js]render()');
         return this.props.persons.map((per, index) => {
             return <Person
+                position = {index}
                 key={per.id}
                 name={per.name}
                 age={per.age}

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import Persons from '../components/Persons/Persons'
 import Cockpit from '../components/Cockpit/Cockpit';
+import Aux from '../hoc/Aux';
+import withClass from '../hoc/withClass';
 
 class App extends Component {
 
@@ -27,9 +29,7 @@ class App extends Component {
   }
 
   togglePersonHandler = () => {
-    this.setState({
-      showPerson: !this.state.showPerson
-    })
+    this.setState((preState, props) => { return { showPerson: !preState.showPerson } })
   }
 
 
@@ -71,20 +71,18 @@ class App extends Component {
             change={(event, id) => this.changeNameHandler(event, id)}
           />
         </div>)
-
-      // style.backgroundColor = 'red'
     }
 
 
 
     return (
-      <div className="App">
+      <Aux>
         <Cockpit title={this.props.title} toggle={this.togglePersonHandler} persons={this.state.persons} />
         {person}
-      </div>
+      </Aux>
     );
 
   }
 
 }
-export default App;
+export default withClass(App, 'App');
