@@ -27,10 +27,8 @@ const Cockpit = (props) => {
         <div>
             <h1>{props.title}</h1>
             <p className={classes.join(' ')}>this is really working</p>
-            <button
-                style={style}
-                onClick={props.toggle}>Switch
-        </button>
+            <button style={style} onClick={props.toggle}>Switch</button>
+            <button onClick={props.login}>Login </button>
         </div>
     );
 }

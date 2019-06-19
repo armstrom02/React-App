@@ -5,6 +5,9 @@ import Cockpit from '../components/Cockpit/Cockpit';
 import Aux from '../hoc/Aux';
 import withClass from '../hoc/withClass';
 
+
+export const AuthContext = React.createContext(true);
+
 class App extends Component {
 
   constructor(props) {
@@ -16,16 +19,26 @@ class App extends Component {
         { id: 'sfsdff', name: "rahul", age: 28 },
         { id: 'sfdsfd', name: "ankur", age: 65 }
       ],
-      showPerson: false
+      showPerson: false,
+      authenticated: false
     }
   }
 
-  componentWillMount() {
-    console.log('[App.js]componentWillMount()');
-  }
+  // componentWillMount() {
+  //   console.log('[App.js]componentWillMount()');
+  // }
 
   componentDidMount() {
     console.log('[App.js]componentDidMount()');
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState){
+    console.log('[App.js]getDerivedStateFromProps()');
+    return prevState;
+  }
+
+  getSnapshotBeforeUpdate(){
+    console.log('[App.js]getSnapshotBeforeUpdate()');    
   }
 
   togglePersonHandler = () => {
@@ -57,6 +70,14 @@ class App extends Component {
     });
   }
 
+  loginHandler = () => {
+    this.setState((preState) => {
+      return {
+        authenticated: !preState.authenticated
+      }
+    })
+  }
+
   render() {
     console.log('[App.js]render()');
 
@@ -77,12 +98,15 @@ class App extends Component {
 
     return (
       <Aux>
-        <Cockpit title={this.props.title} toggle={this.togglePersonHandler} persons={this.state.persons} />
-        {person}
+        <Cockpit login={this.loginHandler} title={this.props.title} toggle={this.togglePersonHandler} persons={this.state.persons} />
+        <AuthContext.Provider value={this.state.authenticated}>
+          {person}
+        </AuthContext.Provider>
       </Aux>
     );
 
   }
 
 }
+
 export default withClass(App, 'App');
